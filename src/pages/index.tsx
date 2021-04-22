@@ -1,4 +1,5 @@
 import { GetStaticProps } from 'next';
+import { api } from '../services/api';
 
 type Episode = {
   id: string;
@@ -31,8 +32,13 @@ export default function Home(props: HomeProps) {
 // Para que não faça uma nova requisição toda vez que alguém acessar a página,
 // assim como é feito no SSR - Server Side Rendering
 export const getStaticProps: GetStaticProps = async () => {
-  const response = await fetch('http://localhost:3333/episodes');
-  const data = await response.json();
+  const { data } = await api.get('episodes', {
+    params: {
+      _limit: 12,
+      _sort: 'published_at',
+      _order: 'desc'
+    }
+  });
 
   return {
     props: {
