@@ -1,3 +1,5 @@
+import { GetStaticProps } from 'next';
+
 export default function Home(props) {
   // SPA - Não aparece na indexação do Google
   // useEffect(() => {
@@ -17,7 +19,7 @@ export default function Home(props) {
 // SSG - Static Site Generation
 // Para que não faça uma nova requisição toda vez que alguém acessar a página,
 // assim como é feito no SSR - Server Side Rendering
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const response = await fetch('http://localhost:3333/episodes');
   const data = await response.json();
 
