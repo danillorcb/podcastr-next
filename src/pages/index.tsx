@@ -1,13 +1,24 @@
 import { GetStaticProps } from 'next';
 
-export default function Home(props) {
-  // SPA - Não aparece na indexação do Google
-  // useEffect(() => {
-  //   fetch('http://localhost:3333/episodes')
-  //     .then(response => response.json())
-  //     .then(data => console.log(data))
-  // }, []);
+type Episode = {
+  id: string;
+  title: string;
+  members: string;
+  published_at: string;
+  thumbnail: string;
+  description: string;
+  file: {
+    url: string;
+    type: string;
+    duration: number;
+  }
+}
 
+type HomeProps = {
+  episodes: Array<Episode>
+}
+
+export default function Home(props: HomeProps) {
   return (
     <div>
       <h1>Index</h1>
