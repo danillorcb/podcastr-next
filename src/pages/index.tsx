@@ -1,18 +1,21 @@
 import { GetStaticProps } from 'next';
+
+import { format, parseISO } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
+
 import { api } from '../services/api';
+import { convertDurationToTimeString } from '../utils/convertDurationToTimeString';
 
 type Episode = {
   id: string;
   title: string;
   members: string;
-  published_at: string;
   thumbnail: string;
   description: string;
-  file: {
-    url: string;
-    type: string;
-    duration: number;
-  }
+  url: string;
+  publishedAt: string;
+  duration: number;
+  durationAsString: string;
 }
 
 type HomeProps = {
@@ -40,9 +43,23 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   });
 
+  const episodes = data.map(episode => {
+    return {
+      id: episode.id,
+      title: episode.title,
+      members: episode.members,
+      thumbnail: episode.thumbnail,
+      description: episode.description,
+      url: episode.file.url,
+      publishedAt: format(parseISO(episode.published_at), 'd MMM yy', { locale: ptBR }),
+      duration: Number(episode.file.duration),
+      durationAsString: convertDurationToTimeString(Number(episode.file.duration)),
+    };
+  });
+
   return {
     props: {
-      episodes: data
+      episodes
     },
     revalidate: 60 * 60 * 8 // atualiza a cada 8 horas
   }
