@@ -17,10 +17,12 @@ export function Player() {
     hasNext,
     isPlaying,
     isLooping,
+    isShuffling,
     playNext,
     playPrevious,
     tooglePlay,
-    toogleLoop
+    toogleLoop,
+    toogleShuffle,
   } = usePlayer();
   
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -92,8 +94,13 @@ export function Player() {
         )}
 
         <div className={styles.buttons}>
-          <button type="button" disabled={!episode}>
-            <img src="/shuffle.svg" alt="Embaralhar"/>
+          <button
+            type="button"
+            disabled={!episode || episodeList.length === 1}
+            onClick={toogleShuffle}
+            className={isShuffling ? styles.isActive : ''}
+          >
+            <img src="/shuffle.svg" alt="Embaralhar" />
           </button>
           <button type="button" onClick={playPrevious} disabled={!episode || !hasPrevious}>
             <img src="/play-previous.svg" alt="Tocar anterior"/>
