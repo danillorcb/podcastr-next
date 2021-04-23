@@ -15,7 +15,6 @@ type Episode = {
   title: string;
   members: string;
   thumbnail: string;
-  description: string;
   url: string;
   publishedAt: string;
   duration: number;
@@ -69,12 +68,14 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
 
         <table cellSpacing={0}>
           <thead>
-            <th></th>
-            <th>Podcast</th>
-            <th>Integrantes</th>
-            <th>Data</th>
-            <th>Duração</th>
-            <th></th>
+            <tr>
+              <th></th>
+              <th>Podcast</th>
+              <th>Integrantes</th>
+              <th>Data</th>
+              <th>Duração</th>
+              <th></th>
+            </tr>
           </thead>
           <tbody>
             {allEpisodes.map(episode => {
@@ -130,7 +131,6 @@ export const getStaticProps: GetStaticProps = async () => {
       title: episode.title,
       members: episode.members,
       thumbnail: episode.thumbnail,
-      description: episode.description,
       url: episode.file.url,
       publishedAt: format(parseISO(episode.published_at), 'd MMM yy', { locale: ptBR }),
       duration: Number(episode.file.duration),
