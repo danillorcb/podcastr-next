@@ -119,10 +119,10 @@
       height: 4rem;
       border-radius: 1rem;
       background: var(--purple-400);
-    }
 
-    &:hover {
-      filter: brightness(0.95);
+      &:hover:not(:disabled) {
+        filter: brightness(0.95);
+      }
     }
   }
 }
